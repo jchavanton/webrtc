@@ -8,6 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+
+#include "mediastreamer2/msfilter.h"
 #include "webrtc/modules/audio_processing/aecm/aecm_core.h"
 
 #include <assert.h>
@@ -366,6 +368,7 @@ static void ResetAdaptiveChannelC(AecmCore* aecm) {
 
 // Initialize function pointers for ARM Neon platform.
 #if defined(WEBRTC_HAS_NEON)
+#pragma message("WEBRTC_HAS_NEON: TRUE")
 static void WebRtcAecm_InitNeon(void)
 {
   WebRtcAecm_StoreAdaptiveChannel = WebRtcAecm_StoreAdaptiveChannelNeon;

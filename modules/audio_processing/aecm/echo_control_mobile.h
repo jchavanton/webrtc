@@ -39,6 +39,11 @@ typedef struct {
 extern "C" {
 #endif
 
+
+/* Libon: return the last delay estimate (binary spectrum match) in block of 8ms  */
+int16_t libon_WebRtcAecm_GetDelayEstimate(void* aecmInst);
+
+
 /*
  * Allocates the memory needed by the AECM. The memory needs to be
  * initialized separately using the WebRtcAecm_Init() function.

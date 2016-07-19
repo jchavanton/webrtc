@@ -525,6 +525,12 @@ int WebRtcAec_GetDelayMetrics(void* handle,
   return 0;
 }
 
+
+int libon_WebRtcAec_GetDelayEstimate(void* handle) {
+  Aec* self = reinterpret_cast<Aec*>(handle);
+  return self->aec->libon_delay_estimate;
+}
+
 AecCore* WebRtcAec_aec_core(void* handle) {
   if (!handle) {
     return NULL;
