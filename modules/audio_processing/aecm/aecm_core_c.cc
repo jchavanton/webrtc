@@ -412,6 +412,9 @@ int WebRtcAecm_ProcessBlock(AecmCore* aecm,
     delay = aecm->fixedDelay;
   }
 
+  aecm->libon_delay_estimate = delay;
+
+
   // Get aligned far end spectrum
   far_spectrum_ptr = WebRtcAecm_AlignedFarend(aecm, &far_q, delay);
   zerosXBuf = (int16_t) far_q;

@@ -281,6 +281,9 @@ int WebRtcAec_GetDelayMetrics(void* handle,
                               int* std,
                               float* fraction_poor_delays);
 
+/* Libon: return the last delay estimate (binary spectrum match) in block of 8ms  */
+int libon_WebRtcAec_GetDelayEstimate(void* handle);
+
 // Returns a pointer to the low level AEC handle.
 //
 // Input:

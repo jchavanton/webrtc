@@ -12,6 +12,7 @@
  * The core AEC algorithm, which is presented with time-aligned signals.
  */
 
+#include "mediastreamer2/msfilter.h"
 #include "webrtc/modules/audio_processing/aec/aec_core.h"
 
 #include <algorithm>
@@ -1378,7 +1379,9 @@ static void ProcessBlock(AecCore* aec) {
                                    abs_far_spectrum, PART_LEN1) == 0) {
       int delay_estimate = WebRtc_DelayEstimatorProcessFloat(
           aec->delay_estimator, abs_near_spectrum, PART_LEN1);
+      ms_debug("WebRtc_DelayEstimatorProcessFloat last[%d] delay[%d]", aec->libon_delay_estimate, delay_estimate);
       if (delay_estimate >= 0) {
+        aec->libon_delay_estimate=delay_estimate;
         // Update delay estimate buffer.
         aec->delay_histogram[delay_estimate]++;
         aec->num_delay_values++;
@@ -1514,7 +1517,7 @@ AecCore* WebRtcAec_CreateAec(int instance_count) {
   WebRtcAec_PartitionDelay = PartitionDelay;
   WebRtcAec_WindowData = WindowData;
 
-#if defined(WEBRTC_ARCH_X86_FAMILY)
+#if defined(WEBRTC_ARCH_X86_FAMILY) && defined(LIBON_NOT_DEFINED)
   if (WebRtc_GetCPUInfo(kSSE2)) {
     WebRtcAec_InitAec_SSE2();
   }
@@ -1524,7 +1527,9 @@ AecCore* WebRtcAec_CreateAec(int instance_count) {
   WebRtcAec_InitAec_mips();
 #endif
 
+#pragma message("***\n***\nWEBRTC_HAS_NEON ?\n***\n***")
 #if defined(WEBRTC_HAS_NEON)
+#pragma message("***\n***\nWEBRTC_HAS_NEON WebRtcAec_InitAec_neon()\n***\n***")
   WebRtcAec_InitAec_neon();
 #endif
 

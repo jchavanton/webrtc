@@ -9,6 +9,7 @@
  */
 
 #include "webrtc/modules/audio_processing/aecm/echo_control_mobile.h"
+#include <stdint.h>
 
 #ifdef AEC_DEBUG
 #include <stdio.h>
@@ -235,6 +236,16 @@ int32_t WebRtcAecm_BufferFarend(void *aecmInst, const int16_t *farend,
   WebRtc_WriteBuffer(aecm->farendBuf, farend, nrOfSamples);
 
   return 0;
+}
+
+int32_t libon_WebRtcAecm_GetEchoEstimate(void *aecmInst) {
+    AecMobile* aecm = static_cast<AecMobile*>(aecmInst);
+    return aecm->aecmCore->libon_echo_estimate;
+}
+
+int16_t libon_WebRtcAecm_GetDelayEstimate(void *aecmInst) {
+    AecMobile* aecm = static_cast<AecMobile*>(aecmInst);
+    return aecm->aecmCore->libon_delay_estimate;
 }
 
 int32_t WebRtcAecm_Process(void *aecmInst, const int16_t *nearendNoisy,
