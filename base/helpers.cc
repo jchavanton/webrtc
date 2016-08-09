@@ -12,6 +12,7 @@
 
 #include <limits>
 #include <memory>
+#include <stdlib.h>
 
 #if defined(FEATURE_ENABLE_SSL)
 #include "webrtc/base/sslconfig.h"

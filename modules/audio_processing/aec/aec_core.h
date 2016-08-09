@@ -169,6 +169,8 @@ struct AecCore {
 
   int system_delay;  // Current system delay buffered in AEC.
 
+  int libon_delay_estimate; // Current delay estimate
+
   int mult;  // sampling frequency multiple
   int sampFreq = 16000;
   size_t num_bands;

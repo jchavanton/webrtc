@@ -8,6 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+
+#include "mediastreamer2/msfilter.h"
 #include "webrtc/modules/audio_processing/aecm/aecm_core.h"
 
 #include <assert.h>
@@ -366,7 +368,8 @@ static void ResetAdaptiveChannelC(AecmCore* aecm) {
 
 // Initialize function pointers for ARM Neon platform.
 #if defined(WEBRTC_HAS_NEON)
-static void WebRtcAecm_InitNeon(void)
+#pragma message("WEBRTC_HAS_NEON: TRUE")
+void WebRtcAecm_InitNeon(void)
 {
   WebRtcAecm_StoreAdaptiveChannel = WebRtcAecm_StoreAdaptiveChannelNeon;
   WebRtcAecm_ResetAdaptiveChannel = WebRtcAecm_ResetAdaptiveChannelNeon;
@@ -738,6 +741,8 @@ void WebRtcAecm_CalcEnergies(AecmCore* aecm,
     aecm->nearLogEnergy[0] = LogOfEnergyInQ8(nearEner, aecm->dfaNoisyQDomain);
 
     WebRtcAecm_CalcLinearEnergies(aecm, far_spectrum, echoEst, &tmpFar, &tmpAdapt, &tmpStored);
+    ms_debug("WebRtcAecm_CalcLinearEnergies echoEst[%d] echo_energy_adapt[%d] echo_energy_stored[%d]" , *echoEst, tmpAdapt, tmpStored);
+    aecm->libon_echo_estimate = *echoEst;
 
     // Shift buffers
     memmove(aecm->echoAdaptLogEnergy + 1, aecm->echoAdaptLogEnergy,
